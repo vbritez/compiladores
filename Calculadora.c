@@ -313,13 +313,13 @@ int procesar(){
                             
                             if(isdigit(caracter)) {
                               ungetc(caracter,archivo);
-                            }else {
+                            }else if(comentario==0){
                               while(caracter!='\n' && caracter!=EOF){
                                   token[++i]=caracter;//se guarda cadena erronea hasta que se encuentre espacio, fin linea o fin archivo
                                   caracter=fgetc(archivo);
                               } //end while
                               
-                              noValido[n]='\0';
+                              noValido[n++]='\0';
                               error=1;
                               token[++i]='\0';
                               strcpy(tokens[fila++],token);
@@ -334,11 +334,12 @@ int procesar(){
                                   printf("\nResultado: ERROR: No se esperaba '%s'",noValido);
                                 }
                               }
-                              
-                              if (comentario == 1)
-                                printf("\nResultado: Es un Comentario"); 
-                              
                                 printf(SEPARADOR);
+                            }else{
+                              while(caracter!='\n' && caracter!=EOF){
+                                  caracter=fgetc(archivo);
+                              } //end while
+                              ungetc(caracter,archivo);
                             }//end if
                     }
                     else if(caracter=='('){
