@@ -205,7 +205,6 @@ void sigLex()
 	int estado=0;
 	char msg[41];
 	entrada e;
-	comentario = 0;
 
 	while((c=fgetc(archivo2))!=EOF)
 	{
@@ -216,6 +215,7 @@ void sigLex()
 		{
 			//incrementar el numero de linea
 			numLinea++;
+			comentario = 0;
 			continue;
 		}
 		else if (isdigit(c))
@@ -370,6 +370,7 @@ void sigLex()
 		{
 		  if ((c=fgetc(archivo2))=='/')
 			{//es un comentario
+			  comentario = 1;
 				while(c!=EOF && c!= '\n')
 				{
 					c=fgetc(archivo2);
@@ -425,7 +426,8 @@ int analisis_lexico(FILE *archivo){
 	initTablaSimbolos();
 		while (t.compLex!=EOF){
 			sigLex();
-  		printf("Lin %d: %s -> %d\n",numLinea,t.pe->lexema,t.compLex);
+			if(comentario == 0)
+  		  printf("Lin %d: %s -> %d\n",numLinea,t.pe->lexema,t.compLex);
 		}
 		fclose(archivo2);
 	return 0;
