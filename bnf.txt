@@ -1,0 +1,35 @@
+<program> ::= <statement>
+<statement> ::= <decla statement><statement> | <if stm><statement> | <for clause><statement> | <assignment statement><statement> | <write stmt><statement> |vacio
+<decla statement> ::= <simple variable> ;
+<simple variable> ::= #VAR# <identifier list>
+<identifier list> ::= #ID# <identifier list2>
+<identifier list2> ::= , #ID#<identifier list2> | [#NUM#|#ID#]<identifier list2>| vacio
+
+<assignment statement> ::= <identifier list> = <arithmetic expression> ;
+
+<arithmetic expression>  -> <Termino> <arithmetic expression2>
+<arithmetic expression2> -> <Addop> <Termino> <arithmetic expression2> | vacio
+<Addop> -> + | -
+<Termino> -> <Signo> <Factor> <Termino2>
+<Termino2>-> <Mulop> <Signo> <Factor> <Termino2> |vacio
+<Signo> -> - | vacio
+<Mulop> -> * | /
+<Factor> ->(<arithmetic expression>) | #NUM#
+
+
+<for clause> ::= #FOR# #ID# = <for list> #DO# <statement> #END FOR# ;
+<for list> ::= <for list2> | <for list>, <for list2t>
+<for list2> ::= <arithmetic expression> | <arithmetic expression> #STEP# <arithmetic expression>
+
+<if stm> ::= #IF# <condition> #THEN# <statement> <if blocks> #END IF# ;
+<if blocks> ::= #ELSE# <if blocks2> |vacio
+<if blocks2> --> <if stm> | <statement> | vacio
+
+<relational op> ::= '==' | '<>' | '<' | '>' | '>=' | '<=' 	  
+			  
+      
+<condition> ::= <expresion>  <relational op> <expresion>
+
+<expresion> ::= <arithmetic expression> | ID | NUM | " LITERAL "
+
+<write stmt> ::= WRITE(<expresion>) ; | WRITELN(<expresion>) ;
