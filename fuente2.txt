@@ -1,0 +1,8 @@
+//factorial de n
+VAR n,f;
+f=1;
+n=10;
+FOR i=2 TO n STEP 1 DO
+f=f*i;
+END FOR;
+WRITE(f);
